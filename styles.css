@@ -1,0 +1,182 @@
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --accent:#ff6b00;
+  --muted:#6b7280;
+  --shadow: 0 6px 18px rgba(15,23,42,0.08);
+  font-family: "Tahoma", "Helvetica", sans-serif;
+}
+
+/* پایه */
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  direction:rtl;
+  color:#111827;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* کانتینر */
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:16px;
+}
+
+/* نوار بالا */
+.topbar{
+  background:linear-gradient(90deg,#fff 0%, #fff 70%);
+  border-bottom:1px solid #e6e9ef;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.topbar .container{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.logo{
+  font-weight:700;
+  font-size:20px;
+  color:var(--accent);
+}
+.search input{
+  width:420px;
+  max-width:50vw;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid #e2e8f0;
+  outline:none;
+}
+.actions .btn{margin-left:auto}
+
+/* دکمه‌ها */
+.btn{
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background:transparent;
+  cursor:pointer;
+}
+.btn.primary{
+  background:var(--accent);
+  color:#fff;
+  box-shadow:var(--shadow);
+}
+
+/* ستون‌بندی اصلی */
+.main-grid{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:18px;
+  align-items:start;
+  padding-top:18px;
+}
+
+/* سایدبار */
+.sidebar{
+  background:var(--card);
+  padding:12px;
+  border-radius:10px;
+  box-shadow:var(--shadow);
+}
+.sidebar h3{margin:0 0 8px 0}
+.sidebar ul{list-style:none;padding:0;margin:0}
+.sidebar li{padding:8px 6px;border-radius:6px;cursor:pointer}
+.sidebar li:hover{background:#f3f4f6}
+
+/* بخش محتوا */
+.hero{
+  background:linear-gradient(90deg,#fff,#fff);
+  padding:18px;
+  border-radius:10px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow);
+}
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:14px;
+}
+
+/* کارت محصول */
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:12px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.card .imgwrap{
+  height:150px;
+  border-radius:8px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f8fafc;
+}
+.card img{max-width:100%; max-height:100%; object-fit:cover}
+.card .title{font-weight:600}
+.card .price{color:var(--accent); font-weight:700}
+
+/* مودال */
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(2,6,23,0.4);
+  z-index:100;
+}
+.modal.hidden{display:none}
+.modal-dialog{
+  width:100%;
+  max-width:520px;
+  background:var(--card);
+  border-radius:12px;
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+.modal-header{display:flex;align-items:center;justify-content:space-between}
+.close{background:transparent;border:0;font-size:22px;cursor:pointer}
+
+/* فرم داخل مودال */
+.upload-form .field{display:flex;flex-direction:column;margin:8px 0}
+.upload-form label span{font-size:13px;color:var(--muted);margin-bottom:6px}
+.upload-form input[type="text"],
+.upload-form input[type="number"],
+.upload-form input[type="file"]{
+  padding:8px 10px;border:1px solid #e6eef7;border-radius:8px;
+}
+.preview{
+  border:1px dashed #e6eef7;
+  height:140px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#fff;
+}
+.preview img{max-width:100%; max-height:100%; object-fit:contain}
+.preview .hint{color:var(--muted)}
+
+/* اکشن‌های مودال */
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+
+/* فوتر */
+.footer{text-align:center;padding:18px;color:var(--muted);font-size:14px;margin-top:20px}
+
+/* ریسپانسیو */
+@media (max-width:880px){
+  .main-grid{grid-template-columns:1fr; padding:12px}
+  .sidebar{order:2}
+  .search input{width:200px}
+}
