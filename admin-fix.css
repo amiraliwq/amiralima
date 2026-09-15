@@ -1,0 +1,37 @@
+/* Admin UI safety fixes — prevents product/gallery images from overflowing the panel. */
+.admin-main,
+.admin-main *{min-width:0}
+
+.admin-main img{max-width:100%;height:auto}
+
+.admin-main .product-admin-grid{width:100%;overflow:hidden}
+.admin-main .product-admin{width:100%;max-width:100%;overflow:hidden;position:relative}
+
+.admin-main img.product-thumb,
+.admin-main .product-admin .product-thumb{
+  width:72px !important;
+  height:72px !important;
+  min-width:72px !important;
+  max-width:72px !important;
+  min-height:72px !important;
+  max-height:72px !important;
+  display:block !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  border-radius:13px !important;
+  flex:none !important;
+}
+
+.admin-main .product-admin > div:not(.product-symbol){overflow:hidden}
+.admin-main .product-admin h3,
+.admin-main .product-admin p,
+.admin-main .product-admin b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+@media(max-width:560px){
+  .admin-main img.product-thumb,
+  .admin-main .product-admin .product-thumb{
+    width:60px !important;height:60px !important;
+    min-width:60px !important;max-width:60px !important;
+    min-height:60px !important;max-height:60px !important;
+  }
+}
