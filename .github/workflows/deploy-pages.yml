@@ -1,4 +1,4 @@
-name: Deploy React site to GitHub Pages
+name: Build and deploy React site to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   build:
+    # The bot commit contains the already-built static site. Do not rebuild it again.
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,11 +28,33 @@ jobs:
         with:
           node-version: 20
 
+      - name: Restore Vite source index
+        run: cp index.source.html index.html
+
       - name: Install dependencies
         run: npm install
 
       - name: Build Vite app
         run: npm run build
+
+      # GitHub Pages is currently configured to publish the main branch.
+      # Keep a built copy at the repository root so the site also works when
+      # the Pages branch workflow is the one serving the project.
+      - name: Sync built site to main branch
+        run: |
+          rm -rf assets
+          cp -R dist/assets ./assets
+          if [ -f dist/admin-enhancements.js ]; then cp dist/admin-enhancements.js ./admin-enhancements.js; fi
+          cp dist/index.html ./index.html
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html assets admin-enhancements.js
+          if git diff --cached --quiet; then
+            echo "No built-site changes to commit."
+          else
+            git commit -m "chore: sync built site"
+            git push
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -38,6 +62,7 @@ jobs:
           path: ./dist
 
   deploy:
+    if: github.actor != 'github-actions[bot]'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
