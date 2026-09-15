@@ -33,7 +33,7 @@ jobs:
 
       - name: Copy runtime helper scripts into dist
         run: |
-          for f in payment-widget.js payment-gate.js admin-enhancements.js ai-assistant.js assignment-manager.js product-image-upload.js vivid-theme.css admin-fix.css; do
+          for f in payment-widget.js payment-gate.js admin-enhancements.js ai-assistant.js assignment-manager.js product-image-upload.js course-video-upload.js vivid-theme.css admin-fix.css; do
             if [ -f "$f" ]; then cp "$f" "dist/$f"; fi
           done
 
@@ -41,13 +41,13 @@ jobs:
         run: |
           rm -rf assets
           cp -R dist/assets ./assets
-          for f in payment-widget.js payment-gate.js admin-enhancements.js ai-assistant.js assignment-manager.js product-image-upload.js vivid-theme.css admin-fix.css; do
+          for f in payment-widget.js payment-gate.js admin-enhancements.js ai-assistant.js assignment-manager.js product-image-upload.js course-video-upload.js vivid-theme.css admin-fix.css; do
             if [ -f "dist/$f" ]; then cp "dist/$f" "./$f"; fi
           done
           cp dist/index.html ./index.html
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html assets payment-widget.js payment-gate.js admin-enhancements.js ai-assistant.js assignment-manager.js product-image-upload.js vivid-theme.css admin-fix.css
+          git add index.html assets payment-widget.js payment-gate.js admin-enhancements.js ai-assistant.js assignment-manager.js product-image-upload.js course-video-upload.js vivid-theme.css admin-fix.css
           if git diff --cached --quiet; then
             echo "No built-site changes to commit."
           else
