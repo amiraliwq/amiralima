@@ -14,7 +14,6 @@
     <footer>© امیرعلی — آکادمی، بازار و آموزش رباتیک</footer>
   </div>
   <script>
-    /* شروع کاملاً خالی: محصولات، دوره‌ها، فیلم‌ها، کاربران آزمایشی، سفارش‌ها و فیش‌های قبلی حذف می‌شوند؛ حساب مدیر حفظ می‌شود. */
     if(localStorage.getItem('amirali_fresh_start_v4')!=='1'){
       ['amirali_products','amirali_lessons','amirali_classes','amirali_users','amirali_orders','amirali_receipts','amirali_access','amirali_cart','amirali_assignments','amirali_submissions'].forEach(k=>localStorage.removeItem(k));
       localStorage.setItem('amirali_fresh_start_v4','1');
