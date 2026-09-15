@@ -16,7 +16,6 @@ concurrency:
 
 jobs:
   build:
-    # The bot commit contains the already-built static site. Do not rebuild it again.
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
@@ -37,18 +36,17 @@ jobs:
       - name: Build Vite app
         run: npm run build
 
-      # GitHub Pages is currently configured to publish the main branch.
-      # Keep a built copy at the repository root so the site also works when
-      # the Pages branch workflow is the one serving the project.
       - name: Sync built site to main branch
         run: |
           rm -rf assets
           cp -R dist/assets ./assets
-          if [ -f dist/admin-enhancements.js ]; then cp dist/admin-enhancements.js ./admin-enhancements.js; fi
+          for f in admin-enhancements.js payment-widget.js payment-gate.js ai-assistant.js vivid-theme.css; do
+            if [ -f "dist/$f" ]; then cp "dist/$f" "./$f"; elif [ -f "$f" ]; then cp "$f" "./$f"; fi
+          done
           cp dist/index.html ./index.html
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html assets admin-enhancements.js
+          git add index.html assets admin-enhancements.js payment-widget.js payment-gate.js ai-assistant.js vivid-theme.css
           if git diff --cached --quiet; then
             echo "No built-site changes to commit."
           else
